@@ -8,7 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+const server_1 = require("./presentation/server");
+require("dotenv/config");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    const server = new server_1.Server();
+    yield server.run();
 });
 (() => __awaiter(void 0, void 0, void 0, function* () {
     yield main();

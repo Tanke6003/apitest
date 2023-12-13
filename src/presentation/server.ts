@@ -1,11 +1,14 @@
 import express from 'express';
 import { Routes } from './routes/index.routes';
+import { envs } from '../config/plugins/envs';
 export class Server {
 
     private app: express.Application = express();
     private readonly port: number = 3000;
 
-    constructor() {}
+    constructor() {
+        this.port = envs.PORT;
+    }
 
     public async run(): Promise<void> {
         // add middleware
@@ -13,7 +16,7 @@ export class Server {
         this.app.use(express.urlencoded({ extended: true }));
         // add upload folder
         this.app.use('/uploads', express.static('uploads'));
-        
+
         // add cors
         this.app.use((req, res, next) => {
             res.header('Access-Control-Allow-Origin', '*');
