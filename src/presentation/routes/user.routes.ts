@@ -1,26 +1,18 @@
-// Path: src/presentation/routes/user.routes.ts
+// routes/UserRouter.ts
+
 import { Router } from 'express';
-import { UserController } from '../controllers/user.controller';
+import { BaseRouter } from './baserouter';
+import { UserController } from './../controllers/user.controller'
+import { UserUseCase } from './../../application/user-cases/user/user'
 
-export class UserRouter {
-  private router: Router = Router();
-  private userController: UserController;
-
-  constructor(userController: UserController) {
-    this.userController = userController;
-    this.initializeRoutes();
+export class UserRouter extends BaseRouter {
+  constructor(private userUseCase: UserUseCase) {
+    super();
   }
 
-  private initializeRoutes(): void {
-    this.router.post('/createuser', this.userController.createUser);
-    //test route
-    this.router.get('/test', (req, res) => {
-      res.send('GET PRODUCTS');
-    });
-  }
-
-
-  public getRouter(): Router {
-    return this.router;
+  configureRoutes(): void {
+    const userController = new UserController(this.userUseCase);
+    this.router.post('/createuser', userController.createUser);
+    // Agregar otras rutas según sea necesario para usuarios
   }
 }

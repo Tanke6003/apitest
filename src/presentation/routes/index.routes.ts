@@ -13,15 +13,9 @@ export class Routes {
 
   static getRoutes(): Router {
     const router = Router();
-    const userDataSource = new UserDataSource();
-    const userRepository = new MariadbUserRepository(userDataSource); 
-    const userUseCase = new UserUseCase(userRepository);
-    const userController = new UserController(userUseCase);
-    const userRouter = new UserRouter(userController);
 
-
-    router.use('/users', userRouter.getRouter());
-    
+    router.use('/users', UserRouter.getRouter());
+    router.use('/products',ProductsRoutes.getRoutes())
     return router;
   }
 }

@@ -1,11 +1,12 @@
 // domain/usecases/CreateUserUseCase.ts
 import { User,UserModel } from "../../../domain/models";
-import { UserRepository } from "../../../domain/repositories/user.repository"
+import { MariadbUserRepository } from "../../../infrastructure/repositories/user.repository";
 
 export class UserUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: MariadbUserRepository) {}
 
   async createUser(user: User): Promise<User> {
+    console.log("use-case")
     // Implementa lógica de validación o de negocio si es necesario
     const createdUser = await this.userRepository.create(user);
     return createdUser;

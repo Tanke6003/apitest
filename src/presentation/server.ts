@@ -1,13 +1,15 @@
-import express from 'express';
+import express,{Router}from 'express';
 import { Routes } from './routes/index.routes';
 import { envs } from '../config/plugins/envs';
 export class Server {
 
     private app: express.Application = express();
     private readonly port: number = 3000;
+    private routes:Router[];
 
-    constructor() {
+    constructor(routes:Router[]) {
         this.port = envs.PORT;
+        this.routes = routes
     }
 
     public async run(): Promise<void> {
@@ -28,7 +30,7 @@ export class Server {
         // add public folder
         this.app.use(express.static('public'));
         // add routes
-        this.app.use(Routes.getRoutes());        
+        this.app.use(Routes.getRoutes());
         // run the server
         this.app.listen(this.port, () => {
             console.log('\x1b[32m%s\x1b[0m', `Server running on port ${this.port}\nhttp://localhost:${this.port}`);
