@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_PASSWORD:-toor}
+      MYSQL_DATABASE: ${MARIADB_DATABASE:-test}
+      MYSQL_USER: ${MARIADB_USERNAME:-root}
+      MYSQL_PASSWORD: ${MARIADB_PASSWORD:-toor}
+    ports:
+      - "${MARIADB_PORT:-3306}:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    environment:
+      PMA_ARBITRARY: 1
+    ports:
+      - "8080:80"
+    depends_on:
+      - mariadb
+
+volumes:
+  mariadb_data:
